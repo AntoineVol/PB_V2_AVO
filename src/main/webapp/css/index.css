@@ -1,0 +1,83 @@
+/* PARAMETRE LOGO */
+img[name='logo']{
+	width: 75px;
+	height: 75px;
+	margin-top:-28px;
+}
+
+img[name='deco']{
+	width: 20px;
+	height: 20px;
+	margin-top:-28px;
+}
+
+div.Connexion{
+	text-align: right;
+}
+
+/* PARAMETRE UserName TopRight */
+button.btn{
+	background-color: #1966B2;
+}
+
+ /* PARAMETRE Table Centrale */
+div[name='tabCentrale']{
+	background-color: rgba(76, 153, 229, 0.2);
+	border-radius: 5px;
+	text-align:justify;
+}
+div[name='TabComplete']{
+	background-color: rgba(31, 127, 223, 0.3);
+	border-radius: 5px;
+}
+ul[name='InterTab']{
+	background-color: rgba(25, 102, 178, 0.3);
+	border-radius: 5px;
+}
+
+/* PARAMETRE TAB de navigation */
+nav[name='tabsHorizontales']{
+	margin-top:-15px;
+	font-variant: small-caps;
+	font-size: 1.2em;
+}
+
+div.tab-content{
+	/* left: 5px; */
+	margin:2%;
+}
+/* SURCHARGE COULEUR TAB */
+#ListeClientColor{
+	color:white;
+}
+#ListeCompteColor{
+	color:white;
+}
+#VirementColor{
+	color:white;
+}
+
+/* PARAMETRE TABLEAU LISTE CLIENTS */
+table{
+	border: 2px solid white;
+    text-align: center;
+}
+th{
+	background-color: rgba(31, 127, 223, 0.5);
+	border: 2px solid white;
+	padding: auto;
+	width:1%;
+	text-align: center;
+	font-size: 1.2em;
+}
+td{
+	background-color: rgba(76, 153, 229, 0.4);
+	border: 2px solid white;
+	padding: auto;
+	width:1%;
+}
+
+/* PAGE COMPLETE */
+body{
+	/* Height: 2000px;	 */
+}
