@@ -27,6 +27,7 @@
 		<url-pattern>/virements</url-pattern>
 		<url-pattern>/clientEdition</url-pattern>
 		<url-pattern>/logout</url-pattern>
+		<url-pattern>/deleteClient</url-pattern>
 	</filter-mapping>
 	
 

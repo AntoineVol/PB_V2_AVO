@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" isELIgnored="false" session="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,11 +9,16 @@
 <meta charset="UTF-8">
 <%-- <%=request.getContextPath()%> --%>
 
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css_bootstrap/4.1.1_css/bootstrap.min.css"/>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css_bootstrap/3.3.7_css/bootstrap.min.css"/>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/index.css" />
-<script src="${pageContext.request.contextPath}/js_jquery_3.3.1/jquery-3.3.1.min.js"></script>
-<script src="${pageContext.request.contextPath}/js_bootstrap_3.3.7/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css_bootstrap/4.1.1_css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css_bootstrap/3.3.7_css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/index.css" />
+<script
+	src="${pageContext.request.contextPath}/js_jquery_3.3.1/jquery-3.3.1.min.js"></script>
+<script
+	src="${pageContext.request.contextPath}/js_bootstrap_3.3.7/bootstrap.min.js"></script>
 
 <title>ProxiBanque</title>
 </head>
@@ -44,7 +50,7 @@
 		<div class="Connexion col-md-2">
 			<h4>
 
-				<font color="green" style="font-variant: small-caps;"><b>${login}</b></font>
+				<font color="green" style="font-variant: small-caps;"><b>${sessionScope.csl.prenom} ${sessionScope.csl.nom}</b></font>
 			</h4>
 			<h5>
 				<font color="green" style="font-variant: small-caps;"><b>Connected</b></font>
@@ -53,7 +59,8 @@
 		<!--  Logo déconnection -->
 		<div class="col-md-2">
 			<div class="navbar-brand">
-				<a href="${logoutUrl}"><img name="logo" src="${pageContext.request.contextPath}/images/Logout.png"
+				<a href="${logoutUrl}"><img name="logo"
+					src="${pageContext.request.contextPath}/images/Logout.png"
 					alt="Logout"></a>
 			</div>
 		</div>
@@ -81,49 +88,44 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td>${client.id}</td>
-					<td>${client.nom}</td>
-					<td>${client.prenom}</td>
-					<td>${client.mail}</td>
-					<td>${client.adresse}</td>
+					<td>${modelClient.id}</td>
+					<td>${modelClient.nom}</td>
+					<td>${modelClient.prenom}</td>
+					<td>${modelClient.mail}</td>
+					<td>${modelClient.adresse}</td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
 	<div class="container-fluid">
-		<form method="post">
+		<form:form modelAttribute="modelClient" method="post">
 			<legend>Modification du client</legend>
 			<div class="form-row">
 				<div class="col">
-					<input type="hidden" class="form-control" value="${idCsl}"
-						name="idCsl" id="idCsl" required/>
+					<form:input type="hidden" class="form-control" path="id" id="idClt"
+						required="required" />
 				</div>
 				<div class="col">
-					<input type="hidden" class="form-control" value="${client.id}"
-						name="idClt" id="idClt" required />
+					<form:input type="text" class="form-control" path="nom"
+						id="nomModifClient" required="required" />
 				</div>
 				<div class="col">
-					<input type="text" class="form-control" value="${client.nom}"
-						name="nomModifClient" id="nomModifClient" required>
+					<form:input type="text" class="form-control" path="prenom"
+						id="prenomModifClient" required="required" />
 				</div>
 				<div class="col">
-					<input type="text" class="form-control" value="${client.prenom}"
-						name="prenomModifClient" id="prenomModifClient" required>
+					<form:input type="email" class="form-control" path="mail"
+						id="mailModifClient" required="required" />
 				</div>
 				<div class="col">
-					<input type="email" class="form-control" value="${client.mail}"
-						name="mailModifClient" id="mailModifClient" required>
+					<form:input type="text" class="form-control" path="adresse"
+						id="adresseModifClient" required="required" />
 				</div>
 				<div class="col">
-					<input type="text" class="form-control" value="${client.adresse}"
-						name="adresseModifClient" id="adresseModifClient" required>
-				</div>
-				<div class="col">
-					<button type="submit" class="btn btn-primary" required>Modifier</button>
+					<button type="submit" class="btn btn-primary">Modifier</button>
 				</div>
 			</div>
-	</div>
-	</form>
+		</form:form>
 	</div>
 
 	<!-- BAS DE PAGE -->

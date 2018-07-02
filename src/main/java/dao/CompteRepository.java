@@ -8,11 +8,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import domaine.Client;
-import domaine.CompteEpargne;
+import domaine.Compte;
 
 @Repository
-public interface CompteEpargneRepository extends JpaRepository<CompteEpargne, Integer> {
-
+public interface CompteRepository extends JpaRepository<Compte, Integer> {
+	
 	@Transactional
-	public List<CompteEpargne> getAllByClient(Client client);
+	public List<Compte> getAllByClient(Client client);
 }

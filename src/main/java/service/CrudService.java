@@ -1,6 +1,7 @@
 package service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -25,7 +26,12 @@ public abstract class CrudService<ENTITY extends Entity> {
 		return this.save(entity);
 	}
 	public ENTITY getById(Integer id) {
-		return this.repo.getOne(id);
+		ENTITY result = null;
+		final Optional<ENTITY> entity = this.repo.findById(id);
+		if(entity.isPresent()) {
+			result = entity.get();
+		}
+		return result;
 	}
 	public List<ENTITY> getAll(){
 		return this.repo.findAll();

@@ -4,12 +4,12 @@
 	xmlns="http://java.sun.com/xml/ns/persistence/orm"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
-	
+
 
 	<mapped-superclass class="domaine.Personne">
 		<attributes>
 			<id name="id">
-				<generated-value strategy="IDENTITY"/>
+				<generated-value strategy="IDENTITY" />
 			</id>
 			<basic name="nom" />
 			<basic name="prenom" />
@@ -19,15 +19,15 @@
 	</mapped-superclass>
 
 	<entity class="domaine.Conseille">
-		
-		<table name="conseille"/>
+
+		<table name="conseille" />
 		<attributes>
-			<basic name="login"/>
-			<basic name="password"/>
+			<basic name="login" />
+			<basic name="password" />
 			<one-to-many name="listClient" mapped-by="conseille" />
 		</attributes>
 	</entity>
-	
+
 	<entity class="domaine.Client">
 		<table name="client" />
 		<attributes>
@@ -35,23 +35,27 @@
 				<join-column name="conseille_id"
 					referenced-column-name="id" />
 			</many-to-one>
-			<!-- <one-to-many name="listCompte" mapped-by="client" /> -->
+			<one-to-many name="listCompte" mapped-by="client" />
 		</attributes>
 	</entity>
-	
+
 	<entity class="domaine.Compte">
-	<table name="compte"/>
-	<inheritance strategy="SINGLE_TABLE"/>
-	<discriminator-column name="type"/>
-		<attributes>	
+		<table name="compte" />
+		<inheritance strategy="SINGLE_TABLE" />
+		<discriminator-column name="type" />
+		<attributes>
 			<id name="id">
-				<generated-value strategy="IDENTITY"/>
+				<generated-value strategy="IDENTITY" />
 			</id>
-			<basic name="solde"/>
-			<basic name="date"/>
+			<basic name="solde" />
+			<basic name="date" />
+			<many-to-one name="client">
+				<join-column name="client_id"
+					referenced-column-name="id" />
+			</many-to-one>
 		</attributes>
 	</entity>
-	
+
 	<entity class="domaine.CompteEpargne">
 		<discriminator-value>Epargne</discriminator-value>
 		<attributes>
@@ -65,5 +69,5 @@
 			<basic name="decouvert"></basic>
 		</attributes>
 	</entity>
-	
+
 </entity-mappings>

@@ -1,5 +1,7 @@
 package domaine;
 
+import java.util.List;
+
 /**
  * Classe d'un client 
  * @author LENOIR et VOLATRON
@@ -16,7 +18,7 @@ public class Client extends Personne {
 	private Integer id;
 
 	private Conseille conseille;
-//	private List<Compte> listCompte;
+	private List<Compte> listCompte;
 
 
 

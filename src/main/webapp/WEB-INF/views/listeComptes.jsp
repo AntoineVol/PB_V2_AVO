@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" isELIgnored="false" session="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -93,25 +94,22 @@
 			</table>
 			<%-- Form Création nouveau compte Courant --%>
 			<div class="container-fluid">
-				<form method="post">
+				<form:form modelAttribute="newCompteCourant" method="post" >
 					<legend>Nouveau Compte Courant</legend>
 					<div class="form-row">
 						<div class="col">
-							<input type="number" class="form-control" placeholder="Solde"
-								name="solde" id="solde" min="0" required>
+							<form:input type="number" class="form-control" placeholder="Solde"
+								path="solde" id="solde" min="0"  required="required"/>
 						</div>
 						<div class="col">
-							<input type="number" class="form-control" placeholder="Découvert"
-								name="decouvert" id="decouvert" min="0" required>
+							<form:input type="number" class="form-control" placeholder="Découvert"
+								path="decouvert" id="decouvert" min="0" required="required"/>
 						</div>
 						<div class="col">
 							<button type="submit" class="btn btn-primary">Créer</button>
 						</div>
-						<div class="col">
-							<input type="hidden" class="form-control" value=${idCsl} name="idCsl" id="idCsl "/>
-						</div>
 					</div>
-				</form>
+				</form:form>
 			</div>
 		</div>
 		<div class="raw">
@@ -139,25 +137,28 @@
 			
 		<%-- Form Création nouveau compte Epargne --%>
 			<div class="container-fluid">
-				<form method="post">
+				<form:form modelAttribute="newCompteEpargne" method="post">
 					<legend>Nouveau Compte Epargne</legend>
 					<div class="form-row">
 						<div class="col">
-							<input type="number" class="form-control" placeholder="Solde"
-								name="solde" id="solde" min="0" required>
+							<form:input 
+							type="number" 
+							class="form-control" 
+							placeholder="Solde"
+							path="solde" 
+							id="solde" 
+							min="0" 
+							required="required"/>
 						</div>
 						<div class="col">
-							<input type="number" class="form-control" placeholder="taux"
-								name="taux" id="taux" min="0" required>
+							<form:input type="number" class="form-control" placeholder="taux"
+								path="taux" id="taux" min="0" required="required"/>
 						</div>
 						<div class="col">
 							<button type="submit" class="btn btn-primary">Créer</button>
 						</div>
-						<div class="col">
-							<input type="hidden" class="form-control" value=${idCsl} name="idCsl" id="idCsl "/>
-						</div>
 					</div>
-				</form>
+				</form:form>
 			</div>
 		</div>
 	</div>
