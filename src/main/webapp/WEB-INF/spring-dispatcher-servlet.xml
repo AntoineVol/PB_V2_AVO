@@ -25,6 +25,8 @@
 		class="service.CompteCourantService" />
 	<bean id="compteEpargneService"
 		class="service.CompteEpargneService" />
+	<bean id="compteService"
+		class="service.CompteService" />
 
 
 	<bean id="viewResolver"

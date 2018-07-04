@@ -1,9 +1,12 @@
 package presentation;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,12 +14,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import domaine.Client;
+import domaine.Compte;
 import domaine.CompteCourant;
 import domaine.CompteEpargne;
 import domaine.Conseille;
 import service.ClientService;
 import service.CompteCourantService;
 import service.CompteEpargneService;
+import service.CompteService;
 import service.ConseilleService;
 
 @Controller
@@ -33,6 +38,9 @@ public class IndexController {
 	
 	@Autowired
 	CompteEpargneService compteEpargneService;
+	
+	@Autowired
+	CompteService compteService;
 
 	@RequestMapping("/Authentification")
 	public ModelAndView Authentification() {
@@ -60,12 +68,12 @@ public class IndexController {
 	}
 
 	@RequestMapping("/clients")
-	public ModelAndView ListeClients(Integer idCsl, HttpSession session) {
+	public ModelAndView ListeClients(HttpSession session) {
 		final ModelAndView mav = new ModelAndView("listeClients");
-		final Conseille csl = this.conseilleService.getById(idCsl);
+		final Conseille csl = (Conseille)session.getAttribute("csl");
 		session.setAttribute("client", null);
 		mav.addObject("listClient", this.clientService.getAllClientByConseille(csl));
-		mav.addObject("idCsl", idCsl);
+		mav.addObject("idCsl", csl.getId());
 		mav.addObject("modelClient", new Client());
 		return mav;
 	}
@@ -89,19 +97,23 @@ public class IndexController {
 	@PostMapping("/clientEdition")
 	public String submit(@ModelAttribute Client modelClient, HttpSession session) {
 		Conseille csl = (Conseille)session.getAttribute("csl");
+		modelClient.setConseille(csl);
 		this.clientService.update(modelClient);
-		return "redirect:/clients.html?idCsl="+csl.getId();
+		return "redirect:/clients.html";
 	}
 	
 	@RequestMapping("/deleteClient")
-	public String deleteClient(Integer idDeleted,HttpSession session) {
-		Conseille csl = (Conseille)session.getAttribute("csl");
+	public String deleteClient(@RequestParam Integer idDeleted) {
+		List<Compte> listCompte = this.compteService.getAllByClient(this.clientService.getById(idDeleted));
+		for(Compte compte : listCompte) {
+			this.compteService.deleteById(compte.getId());
+		}
 		this.clientService.deleteById(idDeleted);
-		return "redirect:/clients.html?idCsl="+csl.getId();
+		return "redirect:/clients.html";
 	}
 	
 	@RequestMapping("/listeComptes")
-	public ModelAndView listeComptes(Integer idClient,HttpSession session) {
+	public ModelAndView listeComptes(@RequestParam Integer idClient,HttpSession session) {
 		ModelAndView mav = new ModelAndView("listeComptes");
 		Client client= this.clientService.getById(idClient);
 		session.setAttribute("client", client);
@@ -130,4 +142,30 @@ public class IndexController {
 		
 	}
 	
+	@GetMapping(value="/listeComptes", params="idDeleted")
+	public String DeleteCompte(@RequestParam Integer idDeleted,HttpSession session) {
+		Client client = (Client)session.getAttribute("client");
+		this.compteService.deleteById(idDeleted);
+		return "redirect:/listeComptes.html?idClient="+client.getId();
+		
+	}
+	
+	@GetMapping("/virements")
+	public ModelAndView virements(@RequestParam Integer idClient,HttpSession session) {
+		ModelAndView mav = new ModelAndView("virements");
+		Client client= this.clientService.getById(idClient);
+		session.setAttribute("client", client);
+		mav.addObject("listCompteEpargne", this.compteEpargneService.getAllByClient(client));
+		mav.addObject("listCompteCourant", this.compteCourantService.getAllByClient(client));
+		mav.addObject("listCompte", this.compteService.getAllByClient(client));
+		
+		return mav;
+	}
+	
+	@PostMapping("/virements")
+	public String submitVirement(@RequestParam Integer debiter, @RequestParam Integer crediter, @RequestParam Integer montant,HttpSession session) {
+		Client client= (Client) session.getAttribute("client");
+		return "redirect:/virements.html?idClient="+client.getId();
+	}
+
 }

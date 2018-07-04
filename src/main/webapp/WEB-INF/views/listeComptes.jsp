@@ -9,67 +9,77 @@
 <meta charset="UTF-8">
 <%-- <%=request.getContextPath()%> --%>
 
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css_bootstrap/4.1.1_css/bootstrap.min.css"/>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css_bootstrap/3.3.7_css/bootstrap.min.css"/>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/index.css" />
-<script src="${pageContext.request.contextPath}/js_jquery_3.3.1/jquery-3.3.1.min.js"></script>
-<script src="${pageContext.request.contextPath}/js_bootstrap_3.3.7/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css_bootstrap/4.1.1_css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css_bootstrap/3.3.7_css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/index.css" />
+<script
+	src="${pageContext.request.contextPath}/js_jquery_3.3.1/jquery-3.3.1.min.js"></script>
+<script
+	src="${pageContext.request.contextPath}/js_bootstrap_3.3.7/bootstrap.min.js"></script>
 
 <title>ProxiBanque</title>
 </head>
 <body>
 	<!-- LISTE DES URLs -->
-	<c:url value="/listeClients.html?idConseille=" var="listeClientsUrl" />
+	<c:url value="/clients.html?" var="listeClientsUrl" />
 	<c:url value="/listeComptes.html" var="listeComptesUrl" />
 	<c:url value="/virements.html" var="virementsUrl" />
-	<c:url value="/listeComptes.html?idCompte?solde?decouvert=" var="ajoutCompteUrl" />
-	<c:url value="/listeComptes.html?idDeleted=" var="deleteCompteCourantUrl" />
-	<c:url value="/listeComptes.html?idDeleted=" var="deleteCompteEpargneUrl" />
+	<c:url value="/listeComptes.html?idDeleted=" var="deleteCompteUrl" />
 	<c:url value="/logout.html" var="logoutUrl" />
-	
+
 
 	<!-- Entête avec Logo -->
 	<nav class="navbar fixed-top navbar-dark bg-dark">
-		<div class="col-md-2">
-			<a class="navbar-brand" href="${listeClientsUrl}${idCsl}">
+		<div class="col-md-3">
+			<div class="navbar-brand">
 				<img name="logo"
-				src="${pageContext.request.contextPath}/images/logo-banque.jpg"
-				alt="LOGO">
-			</a>
+					src="${pageContext.request.contextPath}/images/logo-banque.jpg"
+					alt="LOGO">
+			</div>
 		</div>
 		<div class="col-md-6 d-flex justify-content-center align-items-center">
 			<h1>
-				<font color="white">ProxiBanque Conseiller Clientèle</font>
+				<font color="white">ProxiBanque - Module conseiller clientèle
+					-</font>
 			</h1>
 		</div>
 		<!-- UserName -->
 		<div class="Connexion col-md-2">
 			<h4>
-				<font color="green" style="font-variant: small-caps;"><b>${login}</b></font>
+
+				<font color="green" style="font-variant: small-caps;"><b>Bienvenue
+						${sessionScope.csl.prenom} ${sessionScope.csl.nom}</b></font>
 			</h4>
 			<h5>
 				<font color="green" style="font-variant: small-caps;"><b>Connected</b></font>
 			</h5>
 		</div>
 		<!--  Logo déconnection -->
-		<div class="col-md-2">
+		<div class="col-md-1">
 			<div class="navbar-brand">
-				<a href="${logoutUrl}"><img name="logo" src="${pageContext.request.contextPath}/images/Logout.png"
+				<a href="${logoutUrl}"><img name="logo"
+					src="${pageContext.request.contextPath}/images/Logout.png"
 					alt="Logout"></a>
 			</div>
 		</div>
 	</nav>
+
 	<!-- </header> -->
 	<nav name="tabsHorizontales" class="navbar navbar-dark bg-dark">
-		<a href="${listeClientsUrl}${idCsl}" class="col-sm-3">Liste des Clients</a>
+		<a id="ListeClientColor" href="${listeClientsUrl}" class="col-sm-3 d-flex justify-content-center align-items-center">Liste
+			des Clients</a>
 	</nav>
 
 	<%-- LISTE DES COMPTES D'UN CLIENTS --%>
 	<div class="container-fluid">
 		<h4>
-			<b>Liste des comptes du client ${client.id}</b>
+			<b>Liste des comptes du client ${sessionScope.client.id}
+				${sessionScope.client.prenom} ${sessionScope.client.nom}</b>
 		</h4>
-		
+
 		<div class="raw">
 			<h2>Comptes Courants</h2>
 			<table class="listeClient">
@@ -85,25 +95,26 @@
 							<td>${CompteCourant.id}</td>
 							<td>${CompteCourant.solde}</td>
 							<td>${CompteCourant.decouvert}</td>
-							<td><a href="${deleteCompteCourantUrl}${CompteCourant.id}&action=supressionCompteCourant&idCsl=${idCsl}&idClient=${idClient}"><button>
-									<h7> <font style="font-variant: small-caps;">Suppression</font></h7>
-								</button></a></td>
+							<td><a href="${deleteCompteUrl}${CompteCourant.id}"
+								class="btn btn-danger">Supprimer</a></td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
 			<%-- Form Création nouveau compte Courant --%>
 			<div class="container-fluid">
-				<form:form modelAttribute="newCompteCourant" method="post" >
+				<form:form modelAttribute="newCompteCourant" method="post">
 					<legend>Nouveau Compte Courant</legend>
 					<div class="form-row">
 						<div class="col">
-							<form:input type="number" class="form-control" placeholder="Solde"
-								path="solde" id="solde" min="0"  required="required"/>
+							<form:input type="number" class="form-control"
+								placeholder="Solde" path="solde" id="solde" min="0"
+								required="required" />
 						</div>
 						<div class="col">
-							<form:input type="number" class="form-control" placeholder="Découvert"
-								path="decouvert" id="decouvert" min="0" required="required"/>
+							<form:input type="number" class="form-control"
+								placeholder="Découvert" path="decouvert" id="decouvert" min="0"
+								required="required" />
 						</div>
 						<div class="col">
 							<button type="submit" class="btn btn-primary">Créer</button>
@@ -113,7 +124,7 @@
 			</div>
 		</div>
 		<div class="raw">
-		<h2>Comptes Epargnes</h2>
+			<h2>Comptes Epargnes</h2>
 			<table class="listeClient">
 				<thead style="font-variant: small-caps;">
 					<th>Id Compte</th>
@@ -127,32 +138,26 @@
 							<td>${CompteEpargne.id}</td>
 							<td>${CompteEpargne.solde}</td>
 							<td>${CompteEpargne.taux}</td>
-							<td><a href="${deleteCompteCourantUrl}${CompteEpargne.id}&action=supressionCompteEpargne&idCsl=${idCsl}&idClient=${idClient}"><button>
-									<h7> <font style="font-variant: small-caps;">Suppression</font></h7>
-								</button></a></td>
+							<td><a href="${deleteCompteUrl}${CompteEpargne.id}"
+								class="btn btn-danger">Supprimer</a></td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
-			
-		<%-- Form Création nouveau compte Epargne --%>
+
+			<%-- Form Création nouveau compte Epargne --%>
 			<div class="container-fluid">
 				<form:form modelAttribute="newCompteEpargne" method="post">
 					<legend>Nouveau Compte Epargne</legend>
 					<div class="form-row">
 						<div class="col">
-							<form:input 
-							type="number" 
-							class="form-control" 
-							placeholder="Solde"
-							path="solde" 
-							id="solde" 
-							min="0" 
-							required="required"/>
+							<form:input type="number" class="form-control"
+								placeholder="Solde" path="solde" id="solde" min="0"
+								required="required" />
 						</div>
 						<div class="col">
 							<form:input type="number" class="form-control" placeholder="taux"
-								path="taux" id="taux" min="0" required="required"/>
+								path="taux" id="taux" min="0" required="required" />
 						</div>
 						<div class="col">
 							<button type="submit" class="btn btn-primary">Créer</button>

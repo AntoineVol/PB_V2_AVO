@@ -24,40 +24,40 @@
 </head>
 <body>
 	<!-- LISTE DES URLs -->
-	<c:url value="/listeClients.html?idConseille=" var="listeClientsUrl" />
-	<c:url value="/listeComptes.html?idClient=" var="listeComptesUrl" />
+	<c:url value="/clients.html?" var="listeClientsUrl" />
+	<c:url value="/listeComptes.html" var="listeComptesUrl" />
 	<c:url value="/virements.html" var="virementsUrl" />
 	<c:url value="/clientEdition.html?idClient=" var="clientEditionUrl" />
 	<c:url value="/logout.html" var="logoutUrl" />
 
-	<!-- Entête avec Logo -->
+		<!-- Entête avec Logo -->
 	<nav class="navbar fixed-top navbar-dark bg-dark">
-		<div class="col-md-2">
+		<div class="col-md-3">
 			<div class="navbar-brand">
-				<a id="ListeClientColor" href="${listeClientsUrl}${idCsl}"
-					class="col-sm-3"> <img name="logo"
+				<img name="logo"
 					src="${pageContext.request.contextPath}/images/logo-banque.jpg"
-					alt="LOGO"></a>
-
+					alt="LOGO">
 			</div>
 		</div>
 		<div class="col-md-6 d-flex justify-content-center align-items-center">
 			<h1>
-				<font color="white">ProxiBanque Conseiller Clientèle</font>
+				<font color="white">ProxiBanque - Module conseiller clientèle
+					-</font>
 			</h1>
 		</div>
 		<!-- UserName -->
 		<div class="Connexion col-md-2">
 			<h4>
 
-				<font color="green" style="font-variant: small-caps;"><b>${sessionScope.csl.prenom} ${sessionScope.csl.nom}</b></font>
+				<font color="green" style="font-variant: small-caps;"><b>Bienvenue
+						${sessionScope.csl.prenom} ${sessionScope.csl.nom}</b></font>
 			</h4>
 			<h5>
 				<font color="green" style="font-variant: small-caps;"><b>Connected</b></font>
 			</h5>
 		</div>
 		<!--  Logo déconnection -->
-		<div class="col-md-2">
+		<div class="col-md-1">
 			<div class="navbar-brand">
 				<a href="${logoutUrl}"><img name="logo"
 					src="${pageContext.request.contextPath}/images/Logout.png"
@@ -65,10 +65,11 @@
 			</div>
 		</div>
 	</nav>
+
 	<!-- </header> -->
 	<nav name="tabsHorizontales" class="navbar navbar-dark bg-dark">
-		<a id="ListeClientColor" href="${listeClientsUrl}${idCsl}"
-			class="col-sm-3">Liste des Clients</a>
+		<a id="ListeClientColor" href="${listeClientsUrl}" class="col-sm-3 d-flex justify-content-center align-items-center">Liste
+			des Clients</a>
 	</nav>
 
 	<!-- LISTING DES CLIENTS -->

@@ -20,7 +20,7 @@
 </head>
 <body>
 	<!-- LISTE DES URLs -->
-	<c:url value="/listeClients.html" var="listeClientsUrl" />
+	<c:url value="/clients.html" var="listeClientsUrl" />
 	<c:url value="/logout.html" var="logoutUrl" />
 
 

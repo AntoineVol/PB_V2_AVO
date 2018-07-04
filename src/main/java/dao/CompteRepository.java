@@ -15,4 +15,5 @@ public interface CompteRepository extends JpaRepository<Compte, Integer> {
 	
 	@Transactional
 	public List<Compte> getAllByClient(Client client);
+	
 }

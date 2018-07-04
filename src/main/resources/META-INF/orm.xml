@@ -35,7 +35,8 @@
 				<join-column name="conseille_id"
 					referenced-column-name="id" />
 			</many-to-one>
-			<one-to-many name="listCompte" mapped-by="client" />
+			<one-to-many name="listCompte" mapped-by="client">
+			</one-to-many>
 		</attributes>
 	</entity>
 

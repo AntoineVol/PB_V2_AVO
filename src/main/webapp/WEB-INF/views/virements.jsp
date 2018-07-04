@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" isELIgnored="false" session="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,17 +9,23 @@
 <meta charset="UTF-8">
 <%-- <%=request.getContextPath()%> --%>
 
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css_bootstrap/4.1.1_css/bootstrap.min.css"/>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css_bootstrap/3.3.7_css/bootstrap.min.css"/>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/index.css" />
-<script src="${pageContext.request.contextPath}/js_jquery_3.3.1/jquery-3.3.1.min.js"></script>
-<script src="${pageContext.request.contextPath}/js_bootstrap_3.3.7/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css_bootstrap/4.1.1_css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css_bootstrap/3.3.7_css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/index.css" />
+<script
+	src="${pageContext.request.contextPath}/js_jquery_3.3.1/jquery-3.3.1.min.js"></script>
+<script
+	src="${pageContext.request.contextPath}/js_bootstrap_3.3.7/bootstrap.js"></script>
+<script src="${pageContext.request.contextPath}/js/virement.js"></script>
 
 <title>ProxiBanque</title>
 </head>
 <body>
 	<!-- LISTE DES URLs -->
-	<c:url value="/listeClients.html?idConseille=" var="listeClientsUrl" />
+	<c:url value="/clients.html?" var="listeClientsUrl" />
 	<c:url value="/listeComptes.html" var="listeComptesUrl" />
 	<c:url value="/virements.html" var="virementsUrl" />
 	<c:url value="/logout.html" var="logoutUrl" />
@@ -26,45 +33,52 @@
 
 	<!-- Entête avec Logo -->
 	<nav class="navbar fixed-top navbar-dark bg-dark">
-		<div class="col-md-2">
-			<a class="navbar-brand" href="${listeClientsUrl}${idCsl}"> <img
-				name="logo"
-				src="${pageContext.request.contextPath}/images/logo-banque.jpg"
-				alt="LOGO">
-			</a>
+		<div class="col-md-3">
+			<div class="navbar-brand">
+				<img name="logo"
+					src="${pageContext.request.contextPath}/images/logo-banque.jpg"
+					alt="LOGO">
+			</div>
 		</div>
 		<div class="col-md-6 d-flex justify-content-center align-items-center">
 			<h1>
-				<font color="white">ProxiBanque Conseiller Clientèle</font>
+				<font color="white">ProxiBanque - Module conseiller clientèle
+					-</font>
 			</h1>
 		</div>
 		<!-- UserName -->
 		<div class="Connexion col-md-2">
 			<h4>
-				<font color="green" style="font-variant: small-caps;"><b>${login}</b></font>
+
+				<font color="green" style="font-variant: small-caps;"><b>Bienvenue
+						${sessionScope.csl.prenom} ${sessionScope.csl.nom}</b></font>
 			</h4>
 			<h5>
 				<font color="green" style="font-variant: small-caps;"><b>Connected</b></font>
 			</h5>
 		</div>
 		<!--  Logo déconnection -->
-		<div class="col-md-2">
+		<div class="col-md-1">
 			<div class="navbar-brand">
-				<a href="${logoutUrl}"><img name="logo" src="${pageContext.request.contextPath}/images/Logout.png"
+				<a href="${logoutUrl}"><img name="logo"
+					src="${pageContext.request.contextPath}/images/Logout.png"
 					alt="Logout"></a>
 			</div>
 		</div>
 	</nav>
+
 	<!-- </header> -->
 	<nav name="tabsHorizontales" class="navbar navbar-dark bg-dark">
-		<a href="${listeClientsUrl}${idCsl}" class="col-sm-3">Liste des
-			Clients</a>
+		<a id="ListeClientColor" href="${listeClientsUrl}"
+			class="col-sm-3 d-flex justify-content-center align-items-center">Liste
+			des Clients</a>
 	</nav>
+
 
 	<%-- LISTE DES COMPTES D'UN CLIENTS --%>
 	<div class="container-fluid">
 		<h4>
-			<b>Liste des comptes du client ${client.id}</b>
+			<b>Liste des comptes du client ${client.id} ${client.prenom} ${client.nom}</b>
 		</h4>
 
 		<div class="raw">
@@ -107,7 +121,7 @@
 
 			<!-- VIREMENTS -->
 			<div class="container-fluid">
-				<form method="post">
+				<form method="post" onsubmit="return checkAmount(this)">
 					<legend>Effectuer un nouveau virement</legend>
 					<div class="form-row align-items-center">
 
@@ -115,7 +129,7 @@
 							<label for="debiter">Compte à debiter</label> <select
 								class="form-control" name="debiter" id="Debiter" required>
 								<c:forEach var="compte" items="${listCompte}">
-									<option value="${compte.id}##${compte.typeCompteCourant}">Id
+									<option value="${compte.id}">Id
 										: ${compte.id} - Solde : ${compte.solde}</option>
 								</c:forEach>
 							</select>
@@ -124,7 +138,7 @@
 							<label for="crediter">Compte à debiter</label> <select
 								class="form-control" name="crediter" id="crediter" required>
 								<c:forEach var="compte" items="${listCompte}">
-									<option value="${compte.id}##${compte.typeCompteCourant}">Id
+									<option value="${compte.id}">Id
 										: ${compte.id} - Solde : ${compte.solde}</option>
 								</c:forEach>
 							</select>
@@ -137,16 +151,6 @@
 						<div class="form-group col">
 							<button type="submit" class="btn btn-primary">Effectuer
 								le virement</button>
-						</div>
-						<div class="form-group col">
-							<input type="hidden" class="form-control"
-								value=${idClient
-						} name="idClient" id="idClient" />
-						</div>
-						<div class="form-group col">
-							<input type="hidden" class="form-control"
-								value=${idCsl
-						} name="idCsl" id="idCsl" />
 						</div>
 					</div>
 				</form>

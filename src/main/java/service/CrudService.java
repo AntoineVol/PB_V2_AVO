@@ -20,7 +20,7 @@ public abstract class CrudService<ENTITY extends Entity> {
 		return this.save(entity);
 	}
 	public ENTITY update(ENTITY entity) {
-		if(entity.getId()!=null) {
+		if(entity.getId()==null) {
 			throw new IllegalArgumentException("L'élement ne peut pas être mis à jour car il n'est pas créé en base de donnée");
 		}
 		return this.save(entity);

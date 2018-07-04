@@ -24,7 +24,7 @@
 </head>
 <body>
 	<!-- LISTE DES URLs -->
-	<c:url value="/listeClients.html?idConseille=" var="listeClientsUrl" />
+	<c:url value="/clients.html?" var="listeClientsUrl" />
 	<c:url value="/listeComptes.html?idClient=" var="listeComptesUrl" />
 	<c:url value="/virements.html?idClient=" var="virementsUrl" />
 	<c:url value="/clientEdition.html?idClient=" var="clientEditionUrl" />
@@ -33,7 +33,7 @@
 
 	<!-- Entête avec Logo -->
 	<nav class="navbar fixed-top navbar-dark bg-dark">
-		<div class="col-md-2">
+		<div class="col-md-3">
 			<div class="navbar-brand">
 				<img name="logo"
 					src="${pageContext.request.contextPath}/images/logo-banque.jpg"
@@ -42,7 +42,8 @@
 		</div>
 		<div class="col-md-6 d-flex justify-content-center align-items-center">
 			<h1>
-				<font color="white">ProxiBanque Conseiller clientèle</font>
+				<font color="white">ProxiBanque - Module conseiller clientèle
+					-</font>
 			</h1>
 		</div>
 		<!-- UserName -->
@@ -57,7 +58,7 @@
 			</h5>
 		</div>
 		<!--  Logo déconnection -->
-		<div class="col-md-2">
+		<div class="col-md-1">
 			<div class="navbar-brand">
 				<a href="${logoutUrl}"><img name="logo"
 					src="${pageContext.request.contextPath}/images/Logout.png"
@@ -68,14 +69,15 @@
 
 	<!-- </header> -->
 	<nav name="tabsHorizontales" class="navbar navbar-dark bg-dark">
-		<a id="ListeClientColor" href="${listeClientsUrl}${idCsl}"
-			class="col-sm-3">Liste des Clients</a>
+		<a id="ListeClientColor" href="${listeClientsUrl}"
+			class="col-sm-3 d-flex justify-content-center align-items-center">Liste
+			des Clients</a>
 	</nav>
 
 	<!-- LISTING DES CLIENTS -->
 	<div class="container-fluid">
 		<h4>
-			<b>Présentation de la liste de vos Clients</b>
+			<b>Présentation de la liste de vos clients :</b>
 		</h4>
 		<table id="liste" class="listeClient">
 			<thead style="font-variant: small-caps;">
@@ -99,24 +101,14 @@
 						<td>${client.prenom}</td>
 						<td>${client.mail}</td>
 						<td>${client.adresse}</td>
-						<td><a href="${clientEditionUrl}${client.id}"><button>
-									<h7> <font style="font-variant: small-caps;">Edition</font></h7>
-								</button></a></td>
-						<td><a href="${listeComptesUrl}${client.id}"><button>
-									<h7> <font style="font-variant: small-caps;">Liste
-										des comptes</font></h7>
-								</button></a></td>
-
-						<td><a href="${virementsUrl}${client.id}"><button>
-									<h7> <font style="font-variant: small-caps;">Virements</font></h7>
-								</button></a></td>
-						<td><a
-							href="${deleteUrl}${client.id}">
-								<button>
-									<h7> <font style="font-variant: small-caps;">Suppression</font></h7>
-								</button>
-						</a></td>
-
+						<td><a href="${clientEditionUrl}${client.id}"
+							class="btn btn-warning">Edition</a></td>
+						<td><a href="${listeComptesUrl}${client.id}"
+							class="btn btn-info">Liste des comptes</a></td>
+						<td><a href="${virementsUrl}${client.id}"
+							class="btn btn-success">Virements</a></td>
+						<td><a href="${deleteUrl}${client.id}"
+							class="btn btn-danger">Supprimer</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>
